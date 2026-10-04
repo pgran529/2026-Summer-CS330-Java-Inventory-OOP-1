@@ -31,7 +31,8 @@ public class Armour extends Equippable {
     public Armour()
     {
         super();
-
+        super.stackable = false;
+        super.name = "";
         this.defense = 0;
     }
 
@@ -42,7 +43,18 @@ public class Armour extends Equippable {
      */
     public Armour(Armour src)
     {
-        // Complete this function.
+        super();
+
+        //Armour copy = (Armour) src.clone();
+        super.stackable = false;
+        super.name = src.getName();
+        super.durability = src.getDurability();
+        super.material = src.getMaterial();
+        super.modifier = src.getModifier();
+        super.modifierLevel = src.getModifierLevel();
+        super.element = src.getElement();
+        this.defense = src.getDefense();
+
     }
 
     /**
@@ -74,6 +86,14 @@ public class Armour extends Equippable {
         super.name    = snr.next();
 
         // Complete this function.
+        super.material = snr.next();
+        super.durability = snr.nextInt();
+        this.defense = snr.nextInt();
+        super.modifier = snr.next();
+        super.modifierLevel = snr.nextInt();
+        super.element = snr.next();
+        
+
     }
 
     /**
@@ -83,9 +103,13 @@ public class Armour extends Equippable {
     public Item clone()
     {
         Armour cpy = new Armour();
-
-        // Complete this function.
-
+        cpy.setName(this.name);
+        cpy.setDefense(this.defense);
+        cpy.setDurability(this.durability);
+        cpy.setElement(this.element);
+        cpy.setMaterial(this.material);
+        cpy.setModifier(this.modifier);
+        cpy.setModifierLevel(this.modifierLevel);
         return cpy;
     }
 
@@ -104,9 +128,17 @@ public class Armour extends Equippable {
 
         Armour rhsItem = (Armour) rhs;
 
-        // Complete this function.
-        // Remove the placeholder return
-        return false;
+         if(rhsItem.getMaterial() != this.material)
+            return false;
+         if(rhsItem.getModifier() != this.modifier)
+            return false;
+         if(rhsItem.getElement() != this.element)
+            return false;
+
+        if(rhsItem.getName() != this.name)
+            return false;
+
+        return true;
     }
 
     /**
@@ -116,9 +148,7 @@ public class Armour extends Equippable {
     @Override
     public int hashCode()
     {
-        // Complete this function.
-        // Remove the placeholder return
-        return -1;
+        return name.hashCode() + material.hashCode() + modifier.hashCode() + element.hashCode();
     }
 
     /**
@@ -132,6 +162,11 @@ public class Armour extends Equippable {
         return String.join(
             System.lineSeparator(),
             String.format("  Nme: %s", super.getName()),
+            String.format("  Dur: %d", super.getDurability()),
+            String.format("  Def: %d", this.getDefense()),
+            String.format("  Mtl: %s", super.getMaterial()),
+            String.format("  Mdr: %s (Lvl %d)", super.getModifier(), super.getModifierLevel()),
+            String.format("  Emt: %s", super.getElement()),
             ""
         );
     }
